@@ -7,6 +7,8 @@ import (
 
 type CouriersList interface {
 	AddCouriers(couriers entity.Couriers) error
+	GetCouriersById(courierId int) (entity.Courier, error)
+	GetCouriers(offset, limit int) ([]entity.Courier, error)
 }
 
 type OrdersList interface {

@@ -3,7 +3,6 @@ package repository
 import (
 	"fmt"
 	"github.com/jmoiron/sqlx"
-	"github.com/lib/pq"
 	"yandex-lavka/entity"
 )
 
@@ -23,7 +22,7 @@ func (r *AuthPostgres) AddCouriers(couriers entity.Couriers) error {
 
 	for _, courier := range couriers.Couriers {
 		createListCouriersQuery := fmt.Sprintf("INSERT INTO %s (type, districts, schedule) values ($1, $2, $3)", courierTable)
-		_, err = tx.Exec(createListCouriersQuery, courier.Type, pq.Array(courier.Districts), pq.Array(courier.Schedule))
+		_, err = tx.Exec(createListCouriersQuery, courier.Type, courier.Districts, courier.Schedule)
 		if err != nil {
 			tx.Rollback()
 			return err
@@ -31,4 +30,26 @@ func (r *AuthPostgres) AddCouriers(couriers entity.Couriers) error {
 	}
 
 	return tx.Commit()
+}
+
+func (r *AuthPostgres) GetCouriersById(courierId int) (entity.Courier, error) {
+	var courier entity.Courier
+	query := fmt.Sprintf("SELECT * FROM %s WHERE id=$1", courierTable)
+
+	if err := r.db.Get(&courier, query, courierId); err != nil {
+		return courier, err
+	}
+
+	return courier, nil
+}
+
+func (r *AuthPostgres) GetCouriers(offset, limit int) ([]entity.Courier, error) {
+	var couriers []entity.Courier
+	query := fmt.Sprintf("SELECT * FROM %s OFFSET $1 LIMIT $2", courierTable)
+
+	if err := r.db.Select(&couriers, query, offset, limit); err != nil {
+		return couriers, err
+	}
+
+	return couriers, nil
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
 	"log"
 	yandex_lavka "yandex-lavka"
 	"yandex-lavka/pkg/handler"
@@ -10,6 +11,8 @@ import (
 )
 
 func main() {
+	logrus.SetFormatter(new(logrus.JSONFormatter))
+
 	db, err := repository.NewPostgresDB(repository.ConfigDB{
 		Host:     "localhost",
 		Port:     "5432",
@@ -18,6 +21,7 @@ func main() {
 		DBName:   "postgres",
 		SSLMode:  "disable",
 	})
+
 	if err != nil {
 		log.Fatalf("Failed initialization database")
 	}

@@ -16,3 +16,11 @@ func NewAuthServices(repo repository.CouriersList) *AuthServices {
 func (s *AuthServices) AddCouriers(couriers entity.Couriers) error {
 	return s.repo.AddCouriers(couriers)
 }
+
+func (s *AuthServices) GetCouriersById(courierId int) (entity.Courier, error) {
+	return s.repo.GetCouriersById(courierId)
+}
+
+func (s *AuthServices) GetCouriers(offset, limit int) ([]entity.Courier, error) {
+	return s.repo.GetCouriers(offset, limit)
+}
