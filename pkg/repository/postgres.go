@@ -5,6 +5,12 @@ import (
 	"github.com/jmoiron/sqlx"
 )
 
+const (
+	courierTable = "courier"
+	orderTable   = "order"
+	historyTable = "history"
+)
+
 type ConfigDB struct {
 	Host     string
 	Port     string
