@@ -53,3 +53,14 @@ func (r *AuthPostgres) GetCouriers(params entity.Parameters) ([]entity.Courier, 
 
 	return couriers, nil
 }
+
+func (r *AuthPostgres) GetMetaInfoById(courierId int, period entity.Period) (entity.CourierMeta, error) {
+	var meta entity.CourierMeta
+	query := fmt.Sprintf("SELECT COUNT(price), SUM(price) FROM %s INNER JOIN \"%s\" ON \"order\".id = history.order_id\nWHERE courier_id=$1 AND date >= TO_DATE($2, 'DD-MM-YYYY') AND date < TO_DATE($3, 'DD-MM-YYYY');", historyTable, orderTable)
+
+	if err := r.db.Get(&meta, query, courierId, period.StartDate, period.EndDate); err != nil {
+		return meta, err
+	}
+
+	return meta, nil
+}

@@ -65,16 +65,6 @@ func (h *Handler) GetCouriersById(c *gin.Context) {
 	c.JSON(http.StatusOK, courier)
 }
 
-type CourierRating struct {
-	Earnings int `json:"earnings" binding:"required"`
-	Rating   int `json:"rating" binding:"required"`
-}
-
-type Period struct {
-	StartDate string
-	EndDate   string
-}
-
 func (h *Handler) GetMetaInfoById(c *gin.Context) {
 	courierId, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -84,7 +74,7 @@ func (h *Handler) GetMetaInfoById(c *gin.Context) {
 	startStr := c.Query("start_date")
 	endStr := c.Query("end_date")
 
-	period := Period{startStr, endStr}
+	period := entity.Period{startStr, endStr}
 
 	courier_rating, err := h.service.CouriersList.GetMetaInfoById(courierId, period)
 

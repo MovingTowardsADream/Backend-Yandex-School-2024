@@ -9,6 +9,7 @@ type CouriersList interface {
 	AddCouriers(couriers entity.Couriers) error
 	GetCouriersById(courierId int) (entity.Courier, error)
 	GetCouriers(params entity.Parameters) ([]entity.Courier, error)
+	GetMetaInfoById(courierId int, period entity.Period) (entity.CourierMeta, error)
 }
 
 type OrdersList interface {

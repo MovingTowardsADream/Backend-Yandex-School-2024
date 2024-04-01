@@ -2,7 +2,6 @@ package service
 
 import (
 	"yandex-lavka/entity"
-	"yandex-lavka/pkg/handler"
 	"yandex-lavka/pkg/repository"
 )
 
@@ -10,7 +9,7 @@ type CouriersList interface {
 	AddCouriers(couriers entity.Couriers) error
 	GetCouriersById(courierId int) (entity.Courier, error)
 	GetCouriers(params entity.Parameters) ([]entity.Courier, error)
-	GetMetaInfoById(courierId int, period handler.Period) (int, error)
+	GetMetaInfoById(courierId int, period entity.Period) (entity.CourierRating, error)
 }
 
 type OrdersList interface {

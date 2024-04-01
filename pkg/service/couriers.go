@@ -2,7 +2,6 @@ package service
 
 import (
 	"yandex-lavka/entity"
-	"yandex-lavka/pkg/handler"
 	"yandex-lavka/pkg/repository"
 )
 
@@ -26,6 +25,21 @@ func (s *AuthServices) GetCouriers(params entity.Parameters) ([]entity.Courier, 
 	return s.repo.GetCouriers(params)
 }
 
-func (s *AuthServices) GetMetaInfoById(courierId int, period handler.Period) (int, error) {
-	return 1, nil
+func (s *AuthServices) GetMetaInfoById(courierId int, period entity.Period) (entity.CourierRating, error) {
+	rating, err := s.repo.GetMetaInfoById(courierId, period)
+	courier, err := s.repo.GetCouriersById(courierId)
+	ratio_earn, ratio := Ratio(courier)
+	return entity.CourierRating{rating.Sum * ratio_earn, (rating.Count) / (1) * ratio}, err
+}
+
+func Ratio(courier entity.Courier) (int, int) {
+	switch courier.Type {
+	case "car":
+		return 4, 1
+	case "bike":
+		return 3, 2
+	case "walker":
+		return 2, 3
+	}
+	return 0, 0
 }
