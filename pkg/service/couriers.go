@@ -21,6 +21,6 @@ func (s *AuthServices) GetCouriersById(courierId int) (entity.Courier, error) {
 	return s.repo.GetCouriersById(courierId)
 }
 
-func (s *AuthServices) GetCouriers(offset, limit int) ([]entity.Courier, error) {
-	return s.repo.GetCouriers(offset, limit)
+func (s *AuthServices) GetCouriers(params entity.Parameters) ([]entity.Courier, error) {
+	return s.repo.GetCouriers(params)
 }

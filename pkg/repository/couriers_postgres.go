@@ -43,11 +43,11 @@ func (r *AuthPostgres) GetCouriersById(courierId int) (entity.Courier, error) {
 	return courier, nil
 }
 
-func (r *AuthPostgres) GetCouriers(offset, limit int) ([]entity.Courier, error) {
+func (r *AuthPostgres) GetCouriers(params entity.Parameters) ([]entity.Courier, error) {
 	var couriers []entity.Courier
 	query := fmt.Sprintf("SELECT * FROM %s OFFSET $1 LIMIT $2", courierTable)
 
-	if err := r.db.Select(&couriers, query, offset, limit); err != nil {
+	if err := r.db.Select(&couriers, query, params.Offset, params.Limit); err != nil {
 		return couriers, err
 	}
 

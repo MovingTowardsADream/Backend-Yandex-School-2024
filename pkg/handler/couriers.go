@@ -27,11 +27,6 @@ func (h *Handler) AddCouriers(c *gin.Context) {
 	})
 }
 
-type Parameters struct {
-	Offset int `json:"offset" binding:"required"`
-	Limit  int `json:"limit" binding:"required"`
-}
-
 func (h *Handler) GetCouriers(c *gin.Context) {
 	limitStr := c.Query("limit")
 	limit, err := strconv.Atoi(limitStr)
@@ -45,7 +40,7 @@ func (h *Handler) GetCouriers(c *gin.Context) {
 		offset = 0
 	}
 
-	couriers, err := h.service.CouriersList.GetCouriers(offset, limit)
+	couriers, err := h.service.CouriersList.GetCouriers(entity.Parameters{offset, limit})
 
 	if err != nil {
 		NewErrorMessageResponse(c, http.StatusInternalServerError, err.Error())

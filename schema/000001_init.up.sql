@@ -9,8 +9,8 @@ CREATE TABLE courier
 CREATE TABLE "order"
 (
     id serial not null unique,
-    weight float not null,
-    price float not null,
+    weight int not null,
+    price int not null,
     district int not null,
     convenientTime varchar(255)[] not null
 );
