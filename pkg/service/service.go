@@ -13,6 +13,8 @@ type CouriersList interface {
 
 type OrdersList interface {
 	AddOrders(orders entity.Orders) error
+	GetOrders(params entity.Parameters) ([]entity.Order, error)
+	GetOrdersById(orderId int) (entity.Order, error)
 }
 
 type Service struct {

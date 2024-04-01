@@ -16,3 +16,10 @@ func NewOrdersListService(repo repository.OrdersList) *OrdersListService {
 func (s *OrdersListService) AddOrders(orders entity.Orders) error {
 	return s.repo.AddOrders(orders)
 }
+func (s *OrdersListService) GetOrders(params entity.Parameters) ([]entity.Order, error) {
+	return s.repo.GetOrders(params)
+}
+
+func (s *OrdersListService) GetOrdersById(orderId int) (entity.Order, error) {
+	return s.repo.GetOrdersById(orderId)
+}

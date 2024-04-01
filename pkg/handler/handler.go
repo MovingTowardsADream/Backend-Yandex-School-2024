@@ -25,7 +25,7 @@ func (h *Handler) InitHandler() *gin.Engine {
 	{
 		orders.POST("/", h.AddOrders)
 		orders.GET("/", h.GetOrders)
-		orders.GET("/:id", h.GetCouriersById)
+		orders.GET("/:id", h.GetOrdersById)
 		complete := orders.Group("/complete")
 		{
 			complete.POST("/", h.CompleteTheOrder)
