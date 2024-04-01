@@ -12,6 +12,7 @@ type CouriersList interface {
 }
 
 type OrdersList interface {
+	AddOrders(orders entity.Orders) error
 }
 
 type Repository struct {
@@ -22,5 +23,6 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) *Repository {
 	return &Repository{
 		CouriersList: NewAuthPostgres(db),
+		OrdersList:   NewOrdersListPostgres(db),
 	}
 }

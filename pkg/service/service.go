@@ -12,6 +12,7 @@ type CouriersList interface {
 }
 
 type OrdersList interface {
+	AddOrders(orders entity.Orders) error
 }
 
 type Service struct {
@@ -22,5 +23,6 @@ type Service struct {
 func NewService(repos *repository.Repository) *Service {
 	return &Service{
 		CouriersList: NewAuthServices(repos.CouriersList),
+		OrdersList:   NewOrdersListService(repos.OrdersList),
 	}
 }
