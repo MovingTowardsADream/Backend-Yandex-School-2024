@@ -20,6 +20,10 @@ func (h *Handler) InitHandler() *gin.Engine {
 		couriers.POST("/", h.AddCouriers)
 		couriers.GET("/", h.GetCouriers)
 		couriers.GET("/:id", h.GetCouriersById)
+		meta_info := couriers.Group("/meta-info")
+		{
+			meta_info.GET("/:id", h.GetMetaInfoById)
+		}
 	}
 	orders := router.Group("/orders")
 	{

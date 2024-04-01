@@ -20,5 +20,6 @@ CREATE TABLE history
     id serial not null unique,
     courier_id int references courier (id) not null,
     order_id int references "order" (id) not null,
-    time varchar(255) not null
+    time varchar(255) not null,
+    date timestamp
 );

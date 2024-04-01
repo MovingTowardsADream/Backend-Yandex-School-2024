@@ -3,7 +3,7 @@ package entity
 import "github.com/lib/pq"
 
 type Order struct {
-	Id             int            `json:"id"`
+	Id             int            `json:"id" db:"id"`
 	Weight         int            `json:"weight" binding:"required"`
 	Price          int            `json:"price" binding:"required"`
 	District       int            `json:"district" binding:"required"`

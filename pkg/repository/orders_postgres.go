@@ -55,3 +55,21 @@ func (r *OrdersListPostgres) GetOrdersById(orderId int) (entity.Order, error) {
 
 	return order, nil
 }
+
+func (r *OrdersListPostgres) CompleteTheOrder(histories entity.Histories) error {
+	tx, err := r.db.Begin()
+	if err != nil {
+		return err
+	}
+
+	for _, history := range histories.Histories {
+		createListOrdersQuery := fmt.Sprintf("INSERT INTO %s (courier_id, order_id, \"time\", \"date\") values ($1, $2, $3, TO_DATE($4, 'DD-MM-YYYY'))", historyTable)
+		_, err = tx.Exec(createListOrdersQuery, history.CourierId, history.OrderId, history.Time, history.Date)
+		if err != nil {
+			tx.Rollback()
+			return err
+		}
+	}
+
+	return tx.Commit()
+}

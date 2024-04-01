@@ -23,3 +23,7 @@ func (s *OrdersListService) GetOrders(params entity.Parameters) ([]entity.Order,
 func (s *OrdersListService) GetOrdersById(orderId int) (entity.Order, error) {
 	return s.repo.GetOrdersById(orderId)
 }
+
+func (s *OrdersListService) CompleteTheOrder(histories entity.Histories) error {
+	return s.repo.CompleteTheOrder(histories)
+}

@@ -15,6 +15,7 @@ func (h *Handler) AddOrders(c *gin.Context) {
 		NewErrorMessageResponse(c, http.StatusBadRequest, err.Error())
 		return
 	}
+
 	err := h.service.OrdersList.AddOrders(input)
 
 	if err != nil {
@@ -22,9 +23,7 @@ func (h *Handler) AddOrders(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, map[string]interface{}{
-		"Message": "Successfully added",
-	})
+	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
 
 func (h *Handler) GetOrders(c *gin.Context) {
@@ -68,5 +67,18 @@ func (h *Handler) GetOrdersById(c *gin.Context) {
 }
 
 func (h *Handler) CompleteTheOrder(c *gin.Context) {
+	var input entity.Histories
 
+	if err := c.BindJSON(&input); err != nil {
+		NewErrorMessageResponse(c, http.StatusBadRequest, err.Error())
+		return
+	}
+	err := h.service.OrdersList.CompleteTheOrder(input)
+
+	if err != nil {
+		NewErrorMessageResponse(c, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	c.JSON(http.StatusOK, statusResponse{"ok"})
 }
